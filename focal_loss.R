@@ -1,4 +1,4 @@
-focal_loss <- function(preds, dtrain, gamma = 1, alpha = .5){
+focal_loss <- function(preds, dtrain, gamma = 2, alpha = .25){
     labels <- getinfo(dtrain, "label")
     sigmoid_pred <- 1 / (1 + exp(-preds))
     
@@ -19,7 +19,7 @@ focal_loss <- function(preds, dtrain, gamma = 1, alpha = .5){
     return(list(grad = grad, hess = hess))
 }
 
-focal_metric <- function(preds, dtrain, gamma = 1, alpha = .5){
+focal_metric <- function(preds, dtrain, gamma = 2, alpha = .25){
     labels <- getinfo(dtrain, "label")
     preds[preds <= 0] <- 1e-9
     preds[preds >= 1] <- 1 - 1e-9
