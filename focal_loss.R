@@ -23,8 +23,6 @@ focal_metric <- function(preds, dtrain, gamma = 1, alpha = .5){
     labels <- getinfo(dtrain, "label")
     preds[preds <= 0] <- 1e-9
     preds[preds >= 1] <- 1 - 1e-9
-    # obj_value <- (-sum((1 - preds[labels == 1])^(gamma)*log(preds[labels == 1])) - 
-    #                   sum((preds[labels == 0])^(gamma)*log(1 - preds[labels == 0])))/length(preds)
     obj_value <- (-sum(alpha*(1 - preds[labels == 1])^(gamma)*log(preds[labels == 1])) -
         sum((1-alpha)*(preds[labels == 0])^(gamma)*log(1 - preds[labels == 0])))/length(preds)
     return(list(name = "focal_loss", value = obj_value, higher_better = FALSE))
